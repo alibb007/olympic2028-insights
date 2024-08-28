@@ -1,6 +1,6 @@
 # 🏅 Olympic Analysis Project
 
-![2028 Olympics in Los Angeles](images/DALL·E 2024-08-28 17.02.12 - A digital illustration for the 2028 Olympics in Los Angeles, showing the Hollywood sign with some letters creatively replaced by the Olympic rings. Th.webp)
+![2028 Olympics in Los Angeles](images/DALL-E_2028_Olympics_LA.webp)
 
 
 ## 🎯 Project Overview

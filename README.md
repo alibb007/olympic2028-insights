@@ -1,9 +1,12 @@
 # 🏅 Olympic Analysis Project
 
-![Olympic Rings](https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Olympic_rings_without_rims.svg/800px-Olympic_rings_without_rims.svg.png)
+![Olympic Rings](https://upload.wikimedia.org/wikipedia/commons/5/5c/Olympic_rings_without_rims.svg)
 
 ## 🎯 Project Overview
 This project aims to analyze the impact of hosting the Olympics on a country's performance and predict the possible outcomes of the 2028 Olympics. We'll use historical Olympic data and economic indicators to draw insights and present them in an interactive Streamlit app.
+
+...
+
 
 ## 🚀 Project Goals
 1. **Analyze**: How hosting the Olympics affects a country’s medal count and economic indicators.

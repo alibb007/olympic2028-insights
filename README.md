@@ -1,6 +1,7 @@
 # 🏅 Olympic Analysis Project
 
-![Olympic Rings](https://upload.wikimedia.org/wikipedia/commons/5/5c/Olympic_rings_without_rims.svg)
+![2028 Olympics in Los Angeles](images/olympics_2028_la.png)
+
 
 ## 🎯 Project Overview
 This project aims to analyze the impact of hosting the Olympics on a country's performance and predict the possible outcomes of the 2028 Olympics. We'll use historical Olympic data and economic indicators to draw insights and present them in an interactive Streamlit app.

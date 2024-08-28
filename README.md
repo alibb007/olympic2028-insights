@@ -1,4 +1,4 @@
-# 🏅 Olympic Analysis Project
+# 🏅 Olympic 2028 Prediction
 
 ![2028 Olympics in Los Angeles](images/DALL-E_2028_Olympics_LA.webp)
 

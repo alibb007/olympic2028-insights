@@ -1,0 +1,151 @@
+/* General Layout */
+.App {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(145deg, #004dff, #ffdd00, #4caf50, #f44336);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3), inset -3px -3px 10px rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding-top: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.globe-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 250px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.globe-container canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Sidebar List Styles */
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar li {
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+.sidebar li .icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.sidebar li .text {
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar li.active {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Search Bar Styles */
+.search-bar {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  background: #f9f9f9;
+  border-radius: 25px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.search-bar input:focus {
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.search-bar button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #004dff;
+  color: white;
+  border-radius: 25px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #003bb5;
+}
+
+.autocomplete-list {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 101; /* Ensure the list is above the search bar */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 300px;
+}
+
+.autocomplete-list li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f0f0f0;
+}

@@ -3,8 +3,9 @@ import Globe from 'react-globe.gl';
 import * as d3 from 'd3';
 import * as turf from '@turf/turf';
 
-const GlobeComponent = forwardRef(({ countries }, ref) => {
+const GlobeComponent = forwardRef(({ countries, medalData }, ref) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [showMedalInfo, setShowMedalInfo] = useState(false);
   const globeEl = React.useRef();
 
   useEffect(() => {
@@ -15,15 +16,26 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
       
       if (lat !== undefined && lon !== undefined) {
         globeEl.current.pointOfView({ lat, lng: lon, altitude: 1.2 }, 2000);
+        setTimeout(() => {
+          setShowMedalInfo(true);
+        }, 2000);
       }
     }
   }, [selectedCountry, countries]);
 
   useImperativeHandle(ref, () => ({
     focusOnCountry(country) {
+      setShowMedalInfo(false);
       setSelectedCountry(country);
     },
   }));
+
+  const getMedalData = (countryName) => {
+    console.log("Looking for medal data for:", countryName);
+    const data = medalData.find(country => country['Country Name'].toLowerCase() === countryName.toLowerCase());
+    console.log("Found data:", data);
+    return data;
+  };
 
   return (
     <div className="globe-container">
@@ -42,9 +54,30 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
           <b>${properties?.name || 'No Name'}</b> <br />
           Population: ${d3.format(',')(properties?.POP_EST || 'N/A')}
         `}
-        onPolygonClick={setSelectedCountry}
+        onPolygonClick={(d) => {
+          setShowMedalInfo(false);
+          setSelectedCountry(d);
+        }}
         polygonsTransitionDuration={400}
       />
+      {selectedCountry && showMedalInfo && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setSelectedCountry(null)}>&times;</span>
+            <h2>{selectedCountry.properties.name}</h2>
+            {getMedalData(selectedCountry.properties.name) ? (
+              <div>
+                <p><strong>Gold:</strong> {getMedalData(selectedCountry.properties.name).Gold}</p>
+                <p><strong>Silver:</strong> {getMedalData(selectedCountry.properties.name).Silver}</p>
+                <p><strong>Bronze:</strong> {getMedalData(selectedCountry.properties.name).Bronze}</p>
+                <p><strong>Total:</strong> {getMedalData(selectedCountry.properties.name).Total}</p>
+              </div>
+            ) : (
+              <p>No medal data available for this country.</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 });

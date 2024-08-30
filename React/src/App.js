@@ -6,6 +6,7 @@ import SearchBar from './components/SearchBar';
 
 function App() {
   const [countries, setCountries] = useState([]);
+  const [medalData, setMedalData] = useState([]);
   const globeRef = useRef();
 
   useEffect(() => {
@@ -14,6 +15,11 @@ function App() {
       .then((geoData) => {
         setCountries(geoData.features);
       });
+
+    // Fetching the medals JSON file from the public directory
+    fetch('/medals.json')
+      .then((res) => res.json())
+      .then((data) => setMedalData(data));
   }, []);
 
   const handleSearch = (query) => {
@@ -32,7 +38,7 @@ function App() {
       <Sidebar />
       <div className="main-content">
         <SearchBar onSearch={handleSearch} countries={countries} />
-        <GlobeComponent ref={globeRef} countries={countries} />
+        <GlobeComponent ref={globeRef} countries={countries} medalData={medalData} />
       </div>
     </div>
   );

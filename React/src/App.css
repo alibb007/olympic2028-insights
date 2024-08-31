@@ -228,30 +228,33 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Updated close button for Medal Details */
 .close-button {
   position: absolute;
-  top: -15px;  /* Adjusted to be outside the box */
-  right: -15px; /* Adjusted to be outside the box */
-  background-color: #5656d9;
+  top: -20px;  /* Increased to ensure it's more clearly outside the table */
+  right: -20px; /* Increased to ensure it's more clearly outside the table */
+  background-color: #ff0707;
   border: none;
   color: white;
-  font-size: 12px;
-  padding: 8px;
-  border-radius: 50%;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 50%;  /* Keeping the round shape */
   cursor: pointer;
-  z-index: 1001;
+  z-index: 1002;  /* Ensure it's on top */
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .close-button:hover {
   background-color: #ff1a1a;
 }
-/* Medal Details Modal */
+
 .medal-details {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 10000; /* Ensure it's on top of all other elements */
   background-color: rgba(255, 255, 255, 0.98);
   padding: 20px;
   border-radius: 10px;
@@ -262,6 +265,9 @@
   overflow-y: auto;
   max-height: 80vh; /* Ensures the modal doesn't exceed the viewport height */
   animation: fadeIn 0.5s ease-in-out;
+  resize: both; /* Allows the modal to be resized */
+  overflow: auto; /* Ensures content is scrollable */
+  cursor: move; /* Changes cursor to indicate the modal is draggable */
 }
 
 .medal-details h2 {
@@ -306,93 +312,26 @@
   background-color: #f1f1f1;
 }
 
-/* Updated close button */
-.close-button {
+/* Close Button Styling */
+.medal-details .close-button {
   position: absolute;
-  top: -15px;  /* Adjusted to be outside the box */
-  right: -15px; /* Adjusted to be outside the box */
+  top: 15px;
+  right: 15px;
   background-color: #ff0707;
   border: none;
   color: white;
-  font-size: 10px;
-  padding: 10px;
-  border-radius: 10%;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 50%;
   cursor: pointer;
-  z-index: 1001;
-  animation: fadeIn 0.5s ease-in-out;
+  z-index: 10001; /* Ensures it's above other content within the modal */
 }
 
 .close-button:hover {
   background-color: #ff1a1a;
 }
 
-/* Keyframes for animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-.chart-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 300px;
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  border-radius: 8px;
-  z-index: 10;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-.chart-bar {
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3); /* 3D effect for bars */
-}
-
-/* Sidebar List Styles */
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-}
-
-.sidebar li {
-  width: 100%;
-  padding: 15px 0;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.sidebar li:hover {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.2);
-}
-
-.sidebar li .icon {
-  font-size: 24px;
-  margin-bottom: 5px;
-  color: white;
-}
-
-.sidebar li .text {
-  font-size: 16px;
-  color: white;
-  font-weight: bold;
-}
-
-.sidebar li.active {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.3);
+/* Draggable Functionality */
+.medal-details {
+  cursor: move;
 }

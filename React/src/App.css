@@ -220,3 +220,108 @@
 .close-button:hover {
   background-color: #ff1a1a;
 }
+/* Other existing styles */
+
+/* Updated Medal Details Styles */
+.medal-details {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.98);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-width: 90%;
+  text-align: left;
+  overflow-y: auto; /* In case the content overflows */
+  max-height: 80vh; /* Ensures the modal doesn't exceed the viewport height */
+}
+
+.medal-details h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.medal-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.medal-details th,
+.medal-details td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.medal-details th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.medal-details .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #ff4d4d;
+  border: none;
+  color: white;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.medal-details .close-button:hover {
+  background-color: #ff1a1a;
+}
+.medal-details-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Make the modal responsive */
+  max-width: 600px; /* Set a max width */
+  text-align: center;
+}
+
+.medal-details-container table {
+  width: 100%; /* Ensure the table takes full width */
+  border-collapse: collapse;
+}
+
+.medal-details-container th, .medal-details-container td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.medal-details-container th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #5656d9;
+  border: none;
+  color: white;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #ff1a1a;
+}

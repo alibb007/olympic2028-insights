@@ -1,16 +1,36 @@
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import Globe from 'react-globe.gl';
-import * as d3 from 'd3';
 import * as turf from '@turf/turf';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import 'chartjs-plugin-datalabels';
+import MedalDetails from './MedalDetails';
 
-const GlobeComponent = forwardRef(({ countries, medalData }, ref) => {
+const GlobeComponent = forwardRef(({ countries }, ref) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [barData, setBarData] = useState(null);
   const [showChart, setShowChart] = useState(false);
+  const [showMedalDetails, setShowMedalDetails] = useState(false);
+  const [selectedMedalData, setSelectedMedalData] = useState(null);
+  const [medalType, setMedalType] = useState(null);
   const globeEl = React.useRef();
+
+  const [medalsData, setMedalsData] = useState([]);
+  const [fullData, setFullData] = useState([]);
+
+  useEffect(() => {
+    // Fetch medals.json
+    fetch('/medals.json')
+      .then((response) => response.json())
+      .then((data) => setMedalsData(data))
+      .catch((error) => console.error('Error fetching medals.json:', error));
+
+    // Fetch data.json
+    fetch('/data.json')
+      .then((response) => response.json())
+      .then((data) => setFullData(data))
+      .catch((error) => console.error('Error fetching data.json:', error));
+  }, []);
 
   useEffect(() => {
     if (countries.length > 0 && selectedCountry) {
@@ -38,14 +58,16 @@ const GlobeComponent = forwardRef(({ countries, medalData }, ref) => {
   useImperativeHandle(ref, () => ({
     focusOnCountry(country) {
       setShowChart(false);
+      setShowMedalDetails(false);
       setSelectedCountry(country);
     },
   }));
 
   const getMedalData = (countryName) => {
-    return medalData.find(
+    const medalData = medalsData.find(
       (country) => country['Country Name'].toLowerCase() === countryName.toLowerCase()
     );
+    return medalData || { Gold: 0, Silver: 0, Bronze: 0 };
   };
 
   const createBarData = (medalDataForCountry) => {
@@ -57,20 +79,6 @@ const GlobeComponent = forwardRef(({ countries, medalData }, ref) => {
           data: [medalDataForCountry.Gold, medalDataForCountry.Silver, medalDataForCountry.Bronze],
           backgroundColor: ['gold', 'silver', '#cd7f32'],
           borderRadius: 8,
-          datalabels: {
-            display: true, // Ensure datalabels are always displayed
-            color: '#000',
-            anchor: 'end',
-            align: 'start',
-            offset: -10,
-            font: {
-              weight: 'bold',
-              size: 14,
-            },
-            formatter: function (value) {
-              return value;
-            },
-          },
         },
       ],
     };
@@ -85,21 +93,30 @@ const GlobeComponent = forwardRef(({ countries, medalData }, ref) => {
           data: [0, 0, 0],
           backgroundColor: ['#e0e0e0', '#e0e0e0', '#e0e0e0'],
           borderRadius: 8,
-          datalabels: {
-            display: true, // Ensure datalabels are always displayed
-            color: '#000',
-            anchor: 'end',
-            align: 'start',
-            offset: -10,
-            font: {
-              weight: 'bold',
-              size: 14,
-            },
-            formatter: (value) => value === 0 ? 'No Medals :(' : value,
-          },
         },
       ],
     };
+  };
+
+  const handleBarClick = (elements) => {
+    if (elements.length > 0) {
+      const clickedElementIndex = elements[0].index;
+      const medalType = ['Gold', 'Silver', 'Bronze'][clickedElementIndex];
+      const noc = medalsData.find(
+        (country) => country['Country Name'].toLowerCase() === selectedCountry.properties.name.toLowerCase()
+      )?.NOC;
+
+      if (noc) {
+        // Filter relevant medalists based on NOC and medal type
+        const medalists = fullData.filter(
+          (entry) => entry.NOC === noc && entry.medal_type === medalType
+        );
+
+        setMedalType(medalType);
+        setSelectedMedalData(medalists);
+        setShowMedalDetails(true);
+      }
+    }
   };
 
   const options = {
@@ -115,20 +132,8 @@ const GlobeComponent = forwardRef(({ countries, medalData }, ref) => {
           },
         },
       },
-      datalabels: {
-        display: true, // Ensure datalabels are always displayed
-        anchor: 'end',
-        align: 'start',
-        color: '#000',
-        font: {
-          weight: 'bold',
-          size: 14,
-        },
-        formatter: function (value) {
-          return value;
-        },
-      },
     },
+    onClick: (event, elements) => handleBarClick(elements),
     scales: {
       x: {
         grid: {
@@ -157,42 +162,73 @@ const GlobeComponent = forwardRef(({ countries, medalData }, ref) => {
   return (
     <div className="globe-container">
       <Globe
-      ref={globeEl}
-      globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-      backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-      polygonsData={countries}
-      polygonCapColor={(d) =>
-        d === selectedCountry ? 'rgba(255, 0, 0, 0.8)' : 'rgba(200, 200, 200, 0.6)'
-      }
-      polygonSideColor={() => 'rgba(100, 100, 100, 0.15)'}
-      polygonStrokeColor={() => '#111'}
-      polygonAltitude={(d) => (d === selectedCountry ? 0.12 : 0.03)}
-      polygonLabel={({ properties }) => {
-        const countryMedalData = getMedalData(properties?.name);
-        const totalMedals = countryMedalData
-          ? countryMedalData.Gold + countryMedalData.Silver + countryMedalData.Bronze
-          : 0;
+        ref={globeEl}
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+        polygonsData={countries}
+        polygonCapColor={(d) =>
+          d === selectedCountry ? 'rgba(255, 0, 0, 0.8)' : 'rgba(200, 200, 200, 0.6)'
+        }
+        polygonSideColor={() => 'rgba(100, 100, 100, 0.15)'}
+        polygonStrokeColor={() => '#111'}
+        polygonAltitude={(d) => (d === selectedCountry ? 0.12 : 0.03)}
+        polygonLabel={({ properties }) => {
+          const countryMedalData = getMedalData(properties?.name);
+          const totalMedals = countryMedalData
+            ? countryMedalData.Gold + countryMedalData.Silver + countryMedalData.Bronze
+            : 0;
 
-        return `
+          return `
           <div style="font-family: 'Arial Black', sans-serif; color: white;">
             <b>${properties?.name || 'No Name'}</b> <br />
             Total Medals: ${totalMedals}
           </div>
-        `;
-      }}
-      onPolygonClick={(d) => {
-        setShowChart(false);
-        setSelectedCountry(d);
-      }}
-      polygonsTransitionDuration={400}
-    />
-
-
+          `;
+        }}
+        onPolygonClick={(d) => {
+          setShowChart(false);
+          setSelectedCountry(d);
+        }}
+        polygonsTransitionDuration={400}
+      />
 
       {showChart && barData && (
         <div className="chart-container">
           <button className="close-button" onClick={() => setShowChart(false)}>X</button>
           <Bar data={barData} options={options} />
+        </div>
+      )}
+
+      {showMedalDetails && (
+        <div className="medal-details">
+          <button className="close-button" onClick={() => setShowMedalDetails(false)}>X</button>
+          <h2>{medalType} Medalists</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Discipline</th>
+                <th>Event</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedMedalData && selectedMedalData.length > 0 ? (
+                selectedMedalData.map((medalist, index) => (
+                  <tr key={index}>
+                    <td>{medalist.name}</td>
+                    <td>{medalist.discipline}</td>
+                    <td>{medalist.event}</td>
+                    <td>{medalist.medal_date}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4">No data available</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

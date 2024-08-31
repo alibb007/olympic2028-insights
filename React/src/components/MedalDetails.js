@@ -5,13 +5,18 @@ const MedalDetails = ({ medalType, selectedMedalData, onClose }) => {
 
   useEffect(() => {
     const modal = modalRef.current;
+
     const onMouseDown = (e) => {
-      let offsetX = e.clientX - modal.getBoundingClientRect().left;
-      let offsetY = e.clientY - modal.getBoundingClientRect().top;
+      const offsetX = e.clientX - modal.getBoundingClientRect().left;
+      const offsetY = e.clientY - modal.getBoundingClientRect().top;
 
       const onMouseMove = (e) => {
-        modal.style.left = `${e.clientX - offsetX}px`;
-        modal.style.top = `${e.clientY - offsetY}px`;
+        const newX = e.clientX - offsetX;
+        const newY = e.clientY - offsetY;
+
+        // Ensure the modal stays within the bounds of the window
+        modal.style.left = `${Math.max(0, Math.min(newX, window.innerWidth - modal.offsetWidth))}px`;
+        modal.style.top = `${Math.max(0, Math.min(newY, window.innerHeight - modal.offsetHeight))}px`;
       };
 
       const onMouseUp = () => {

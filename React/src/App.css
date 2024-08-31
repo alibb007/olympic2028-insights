@@ -254,7 +254,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10000; /* Ensure it's on top of all other elements */
+  z-index: 10002; /* Ensure it's on top of all other elements */
   background-color: rgba(255, 255, 255, 0.98);
   padding: 20px;
   border-radius: 10px;
@@ -266,9 +266,9 @@
   max-height: 80vh; /* Ensures the modal doesn't exceed the viewport height */
   animation: fadeIn 0.5s ease-in-out;
   resize: both; /* Allows the modal to be resized */
-  overflow: auto; /* Ensures content is scrollable */
   cursor: move; /* Changes cursor to indicate the modal is draggable */
 }
+
 
 .medal-details h2 {
   margin-bottom: 20px;
@@ -312,11 +312,10 @@
   background-color: #f1f1f1;
 }
 
-/* Close Button Styling */
 .medal-details .close-button {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 15px;  /* Position outside the top-right corner */
+  right: 15px; /* Position outside the top-right corner */
   background-color: #ff0707;
   border: none;
   color: white;
@@ -324,14 +323,20 @@
   padding: 8px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 10001; /* Ensures it's above other content within the modal */
+  z-index: 10002; /* Ensure it's above other content */
 }
 
-.close-button:hover {
+.medal-details .close-button:hover {
   background-color: #ff1a1a;
 }
 
+
+
+
+/* Draggable Functionality */
 /* Draggable Functionality */
 .medal-details {
   cursor: move;
+  z-index: 10002; /* Ensure it stays above other content when dragged */
 }
+

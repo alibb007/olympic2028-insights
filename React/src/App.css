@@ -54,172 +54,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Sidebar List Styles */
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-}
-
-.sidebar li {
-  width: 100%;
-  padding: 15px 0;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.sidebar li:hover {
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.2);
-}
-
-.sidebar li .icon {
-  font-size: 24px;
-  margin-bottom: 5px;
-  color: white;
-}
-
-.sidebar li .text {
-  font-size: 16px;
-  color: white;
-  font-weight: bold;
-}
-
-.sidebar li.active {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.3);
-}
-
-/* Search Bar Styles */
-.search-bar {
-  position: fixed;
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  width: 300px;
-  background: #f9f9f9;
-  border-radius: 25px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.search-bar input {
-  flex-grow: 1;
-  padding: 10px 15px;
-  border-radius: 25px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  background: transparent;
-}
-
-.search-bar input:focus {
-  background: #ffffff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.search-bar button {
-  padding: 8px 12px;
-  border: none;
-  background-color: #004dff;
-  color: white;
-  border-radius: 25px;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.search-bar button:hover {
-  background-color: #003bb5;
-}
-
-.autocomplete-list {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  max-height: 150px;
-  overflow-y: auto;
-  z-index: 101; /* Ensure the list is above the search bar */
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 300px;
-}
-
-.autocomplete-list li {
-  padding: 10px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.autocomplete-list li:hover {
-  background-color: #f0f0f0;
-}
-
-/* Modal Styles */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.75);
-  padding: 20px;
-  border-radius: 10px;
-  color: rgb(255, 1, 1);
-  width: 300px;
-  text-align: center;
-}
-
-.modal-content {
-  background-color: #000000;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  color: #aaa;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-.close-button {
+.chart-container .close-button {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #5656d9;
+  background-color: #ff0707;
   border: none;
   color: white;
   font-size: 10px;
-  padding: 5px 10px;
-  border-radius: 20px;
+  padding: 10px;
+  border-radius: 10%;
   cursor: pointer;
+  z-index: 1001;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-.close-button:hover {
+.chart-container .close-button:hover {
   background-color: #ff1a1a;
 }
+
+.chart-container .bar {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.chart-container .bar:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
 /* Medal Details Modal */
 .medal-details {
   position: fixed;
@@ -281,8 +147,7 @@
   background-color: #f1f1f1;
 }
 
-/* Updated close button */
-.close-button {
+.medal-details .close-button {
   position: fixed;
   top: 10px;
   right: 10px;
@@ -297,7 +162,7 @@
   animation: fadeIn 0.5s ease-in-out;
 }
 
-.close-button:hover {
+.medal-details .close-button:hover {
   background-color: #ff1a1a;
 }
 
@@ -311,23 +176,6 @@
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
-}
-
-.chart-container {
-  position: absolute;
-  top: 20%;
-  left: 20%;
-  width: 400px;
-  height: 300px;
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  border-radius: 8px;
-  z-index: 10;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Sidebar List Styles */

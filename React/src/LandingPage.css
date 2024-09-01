@@ -85,30 +85,25 @@ body {
     animation: fadeIn 3s ease-in-out;
 }
 
-/* Fade Out Transition */
+/* Make sure the fade-out animation is not hiding the main content */
 .fade-out {
     animation: fadeOut 1s ease-in-out forwards;
-}
-
-@keyframes fadeOut {
+  }
+  
+  @keyframes fadeOut {
     from {
-        opacity: 1;
+      opacity: 1;
     }
     to {
-        opacity: 0;
+      opacity: 0;
+      visibility: hidden; /* Ensures it is hidden after fade-out */
     }
-}
-
-/* Fade In for Content After Landing Page */
-.main-content {
+  }
+  
+  .main-content {
+    display: flex;
+    opacity: 1;
     animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+    z-index: 1001; /* Ensure it appears above other content */
+  }
+  

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Globe from 'react-globe.gl';
-import '../LandingPage.css'; // Assuming the CSS is in LandingPage.css
+import '../LandingPage.css';
 
 const LandingPage = ({ onStart }) => {
   const globeEl = useRef();
@@ -8,7 +8,7 @@ const LandingPage = ({ onStart }) => {
   useEffect(() => {
     const globe = globeEl.current;
     globe.controls().autoRotate = true;
-    globe.controls().autoRotateSpeed = 0.5; // Slow rotation speed
+    globe.controls().autoRotateSpeed = 0.5;
     globe.pointOfView({ altitude: 2.5 }, 2000);
   }, []);
 

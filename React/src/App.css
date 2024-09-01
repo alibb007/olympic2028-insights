@@ -6,99 +6,26 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  position: relative;
 }
 
-body {
-  font-family: 'Montserrat', sans-serif;
-  color: #EDEDED;
-  background-color: #121212; /* Dark background */
-  margin: 0;
-  padding: 0;
-}
-
-/* Landing Page Styles */
-.landing-page {
-  position: absolute;
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(145deg, #004dff, #ffdd00, #4caf50, #f44336);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3), inset -3px -3px 10px rgba(255, 255, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding-top: 30px;
+  position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000; /* Ensure it's above the globe */
-  background-image: url('https://i.pinimg.com/originals/d4/97/7c/d4977c5fc5c792dbbd143948e505a9e0.jpg'); /* Adjust the path as necessary */
-  background-size: cover;
-  background-position: center;
-  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for better readability */
+  z-index: 10;
 }
-
-.overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1002; /* Ensure it is on top of everything */
-}
-
-.landing-page h1 {
-  font-size: 4rem;
-  font-weight: 800;
-  color: #FFD700; /* Gold color for the text */
-  margin-bottom: 20px;
-  text-align: center;
-  animation: fadeIn 2s ease-in-out;
-}
-
-.start-button {
-  padding: 15px 30px;
-  background-color: #004387; /* DodgerBlue background */
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 600;
-  cursor: pointer;
-  animation: fadeIn 3s ease-in-out;
-  text-align: center;
-}
-
-.start-button:hover {
-  background-color: #4169E1; /* RoyalBlue background on hover */
-}
-
-/* Olympic Logo Style */
-.olympic-logo {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  z-index: 1003; /* Ensure it's above everything else */
-}
-
-/* Fade Out Transition */
-.fade-out {
-  animation: fadeOut 1s ease-in-out forwards;
-}
-
-@keyframes fadeOut {
-  from {
-      opacity: 1;
-  }
-  to {
-      opacity: 0;
-  }
-}
-
-/* Fade In for Content After Landing Page */
 .main-content {
+  display: flex; /* Ensure it's displayed */
+  opacity: 1;    /* Ensure it is fully visible */
   animation: fadeIn 1s ease-in-out;
 }
 
@@ -110,3 +37,316 @@ body {
       opacity: 1;
   }
 }
+.globe-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 250px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.globe-container canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.chart-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 300px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 1001;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.chart-container .close-button {
+  position: absolute;
+  top: -15px;  /* Adjusted to be outside the box */
+  right: -15px; /* Adjusted to be outside the box */
+  background-color: #ff0707;
+  border: none;
+  color: white;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1002;
+}
+
+.close-button:hover {
+  background-color: #ff1a1a;
+}
+
+.chart-container .chart-bar {
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3); /* 3D effect for bars */
+}
+
+/* Sidebar List Styles */
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.sidebar li {
+  width: 100%;
+  padding: 15px 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+.sidebar li .icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.sidebar li .text {
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar li.active {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0px 0px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Search Bar Styles */
+.search-bar {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  background: #f9f9f9;
+  border-radius: 25px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.search-bar input:focus {
+  background: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.search-bar button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #004dff;
+  color: white;
+  border-radius: 25px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #003bb5;
+}
+
+.autocomplete-list {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 101; /* Ensure the list is above the search bar */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 300px;
+}
+
+.autocomplete-list li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 20px;
+  border-radius: 10px;
+  color: rgb(255, 1, 1);
+  width: 300px;
+  text-align: center;
+}
+
+.modal-content {
+  background-color: #000000;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Updated close button for Medal Details */
+.close-button {
+  position: absolute;
+  top: -20px;  /* Increased to ensure it's more clearly outside the table */
+  right: -20px; /* Increased to ensure it's more clearly outside the table */
+  background-color: #ff0707;
+  border: none;
+  color: white;
+  font-size: 14px;
+  padding: 12px;
+  border-radius: 50%;  /* Keeping the round shape */
+  cursor: pointer;
+  z-index: 1002;  /* Ensure it's on top */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.close-button:hover {
+  background-color: #ff1a1a;
+}
+
+.medal-details {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10002; /* Ensure it's on top of all other elements */
+  background-color: rgba(255, 255, 255, 0.98);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 600px;
+  max-width: 90%;
+  text-align: left;
+  overflow-y: auto;
+  max-height: 80vh; /* Ensures the modal doesn't exceed the viewport height */
+  animation: fadeIn 0.5s ease-in-out;
+  resize: both; /* Allows the modal to be resized */
+  cursor: move; /* Changes cursor to indicate the modal is draggable */
+}
+
+
+.medal-details h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  font-family: 'Arial Black', sans-serif;
+}
+
+.medal-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.medal-details th,
+.medal-details td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.medal-details th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #444;
+  font-size: 16px;
+}
+
+.medal-details td {
+  color: #333;
+  font-size: 15px;
+}
+
+.medal-details tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.medal-details tr:hover {
+  background-color: #f1f1f1;
+}
+
+.medal-details .close-button {
+  position: absolute;
+  top: 15px;  /* Position outside the top-right corner */
+  right: 15px; /* Position outside the top-right corner */
+  background-color: #ff0707;
+  border: none;
+  color: white;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10002; /* Ensure it's above other content */
+}
+
+.medal-details .close-button:hover {
+  background-color: #ff1a1a;
+}
+
+
+/* Draggable Functionality */
+.medal-details {
+  cursor: move;
+  z-index: 10002; /* Ensure it stays above other content when dragged */
+}
+

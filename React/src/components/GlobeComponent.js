@@ -6,7 +6,6 @@ import Chart from 'chart.js/auto';
 import 'chartjs-plugin-datalabels';
 import MedalDetails from './MedalDetails';
 
-
 const GlobeComponent = forwardRef(({ countries }, ref) => {
   console.log("GlobeComponent rendered");
   const [selectedCountry, setSelectedCountry] = useState(null);

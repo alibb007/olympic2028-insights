@@ -1,0 +1,89 @@
+/* General Layout */
+.App {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Landing Page Styles */
+.landing-page {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2; /* Ensure it's above the globe */
+    background-color: transparent; /* Transparent to show the globe background */
+}
+
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3; /* Ensure it is on top of everything */
+}
+
+.landing-page h1 {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #FFD700; /* Gold color for the text */
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.start-button {
+    padding: 15px 30px;
+    background-color: #1E90FF; /* DodgerBlue background */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    animation: fadeIn 3s ease-in-out;
+    text-align: center;
+}
+
+.start-button:hover {
+    background-color: #4169E1; /* RoyalBlue background on hover */
+}
+
+/* Fade Out Transition */
+.fade-out {
+    animation: fadeOut 1s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Fade In for Content After Landing Page */
+.main-content {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

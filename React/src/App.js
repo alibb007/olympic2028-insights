@@ -3,8 +3,11 @@ import './App.css';
 import Sidebar from './components/Sidebar';
 import GlobeComponent from './components/GlobeComponent';
 import SearchBar from './components/SearchBar';
+import LandingPage from './components/LandingPage';
 
 function App() {
+  const [showLandingPage, setShowLandingPage] = useState(true);
+  const [fade, setFade] = useState(false);
   const [countries, setCountries] = useState([]);
   const [medalData, setMedalData] = useState([]);
   const globeRef = useRef();
@@ -16,7 +19,6 @@ function App() {
         setCountries(geoData.features);
       });
 
-    // Fetching the medals JSON file from the public directory
     fetch('/medals.json')
       .then((res) => res.json())
       .then((data) => setMedalData(data));
@@ -33,13 +35,24 @@ function App() {
     }
   };
 
+  const handleStartClick = () => {
+    setFade(true);
+    setTimeout(() => {
+      setShowLandingPage(false);
+    }, 1000); // Match the timeout to the duration of the fade-out animation
+  };
+
   return (
-    <div className="App">
-      <Sidebar />
-      <div className="main-content">
-        <SearchBar onSearch={handleSearch} countries={countries} />
-        <GlobeComponent ref={globeRef} countries={countries} medalData={medalData} />
-      </div>
+    <div className={`App ${fade ? 'fade-out' : ''}`}>
+      {showLandingPage ? (
+        <LandingPage onStart={handleStartClick} />
+      ) : (
+        <div className="main-content">
+          <Sidebar />
+          <SearchBar onSearch={handleSearch} countries={countries} />
+          <GlobeComponent ref={globeRef} countries={countries} medalData={medalData} />
+        </div>
+      )}
     </div>
   );
 }

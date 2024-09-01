@@ -38,23 +38,25 @@ function App() {
   const handleStartClick = () => {
     setFade(true);
     setTimeout(() => {
-      setShowLandingPage(false);
+        setShowLandingPage(false);
     }, 1000); // Match the timeout to the duration of the fade-out animation
-  };
+};
 
-  return (
-    <div className={`App ${fade ? 'fade-out' : ''}`}>
+
+return (
+  <div className={`App ${fade ? 'fade-out' : ''}`}>
       {showLandingPage ? (
-        <LandingPage onStart={handleStartClick} />
+          <LandingPage onStart={handleStartClick} />
       ) : (
-        <div className="main-content">
-          <Sidebar />
-          <SearchBar onSearch={handleSearch} countries={countries} />
-          <GlobeComponent ref={globeRef} countries={countries} medalData={medalData} />
-        </div>
+          <div className="main-content">
+              <Sidebar />
+              <SearchBar onSearch={handleSearch} countries={countries} />
+              <GlobeComponent ref={globeRef} countries={countries} medalData={medalData} />
+          </div>
       )}
-    </div>
-  );
+  </div>
+);
+
 }
 
 export default App;

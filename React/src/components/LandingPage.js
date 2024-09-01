@@ -22,9 +22,12 @@ const LandingPage = ({ onStart }) => {
         height={window.innerHeight}
       />
       <div className="overlay">
-        <h1>Welcome to Olympic 2024 Dashboard :)</h1>
+        <h1>Welcome to Olympic 2024 Dashboard!</h1>
         <button className="start-button" onClick={onStart}>START</button>
       </div>
+      <a href="https://olympics.com/en/" target="_blank" rel="noopener noreferrer">
+        <img src="/paris2024_logo_v2.gif" alt="Olympic Logo" className="olympic-logo" />
+      </a>
     </div>
   );
 };

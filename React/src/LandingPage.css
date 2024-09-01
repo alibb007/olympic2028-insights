@@ -1,4 +1,5 @@
 /* General Layout */
+
 .App {
     display: flex;
     height: 100vh;
@@ -9,17 +10,30 @@
     position: relative;
 }
 
+body {
+    font-family: 'Paris2024Font', sans-serif; /* Update this with the specific font you find */
+    color: #EDEDED;
+    background-color: #121212; /* Dark background */
+    margin: 0;
+    padding: 0;
+}
+
 /* Landing Page Styles */
 .landing-page {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 2; /* Ensure it's above the globe */
-    background-color: transparent; /* Transparent to show the globe background */
+    z-index: 1000; /* Ensure it's above the globe */
+    background-image: url('https://i.pinimg.com/originals/d4/97/7c/d4977c5fc5c792dbbd143948e505a9e0.jpg'); /* Adjust the path as necessary */
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for better readability */
 }
 
 .overlay {
@@ -31,7 +45,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 3; /* Ensure it is on top of everything */
+    z-index: 1002; /* Ensure it is on top of everything */
 }
 
 .landing-page h1 {
@@ -45,10 +59,10 @@
 
 .start-button {
     padding: 15px 30px;
-    background-color: #1E90FF; /* DodgerBlue background */
+    background-color: #FFFFFF; /* White background */
     border: none;
     border-radius: 8px;
-    color: white;
+    color: #000000; /* Black text */
     font-size: 1.5rem;
     font-weight: 600;
     cursor: pointer;
@@ -57,7 +71,18 @@
 }
 
 .start-button:hover {
-    background-color: #4169E1; /* RoyalBlue background on hover */
+    background-color: #E0E0E0; /* Light grey background on hover */
+}
+
+/* Olympic Logo Style */
+.olympic-logo {
+    position: absolute;
+    bottom: 20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px; /* Adjust size as needed */
+    z-index: 1002; /* Ensure it appears above the content */
+    animation: fadeIn 3s ease-in-out;
 }
 
 /* Fade Out Transition */

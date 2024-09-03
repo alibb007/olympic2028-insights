@@ -147,7 +147,8 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
         },
         ticks: {
           font: {
-            size: 14,
+            family: 'Paris2024', // Apply custom font
+            size: 20,
             weight: 'bold',
           },
           color: '#000',
@@ -185,7 +186,7 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
             : 0;
 
           return `
-          <div style="font-family: 'Arial Black', sans-serif; color: white;">
+          <div style="font-family: 'Paris2024', sans-serif; color: gold; font-size: 28px;">
             <b>${properties?.name || 'No Name'}</b> <br />
             Total Medals: ${totalMedals}
           </div>

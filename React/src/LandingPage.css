@@ -25,7 +25,6 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 1000; /* Ensure it's above the globe */
-    background-image: url('https://i.pinimg.com/originals/d4/97/7c/d4977c5fc5c792dbbd143948e505a9e0.jpg'); /* Adjust the path as necessary */
     background-size: cover;
     background-position: center;
     background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for better readability */

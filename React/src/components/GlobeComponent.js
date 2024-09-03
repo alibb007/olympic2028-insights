@@ -14,6 +14,7 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
   const [showMedalDetails, setShowMedalDetails] = useState(false);
   const [selectedMedalData, setSelectedMedalData] = useState(null);
   const [medalType, setMedalType] = useState(null);
+  const [totalMedals, setTotalMedals] = useState(0);
   const globeEl = React.useRef();
 
   const [medalsData, setMedalsData] = useState([]);
@@ -46,9 +47,13 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
           const medalDataForCountry = getMedalData(selectedCountry.properties.name);
           if (medalDataForCountry) {
             setBarData(createBarData(medalDataForCountry));
+            setTotalMedals(
+              medalDataForCountry.Gold + medalDataForCountry.Silver + medalDataForCountry.Bronze
+            );
             setShowChart(true);
           } else {
             setBarData(createNoMedalData());
+            setTotalMedals(0);
             setShowChart(true);
           }
         }, 2000);
@@ -197,40 +202,18 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
         <div className="chart-container">
           <button className="close-button" onClick={() => setShowChart(false)}>X</button>
           <Bar data={barData} options={options} />
+          <div className="total-medals">
+            <strong>Total Medals: {totalMedals}</strong>
+          </div>
         </div>
       )}
 
       {showMedalDetails && (
-        <div className="medal-details">
-          <button className="close-button" onClick={() => setShowMedalDetails(false)}>X</button>
-          <h2>{medalType} Medalists</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Discipline</th>
-                <th>Event</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedMedalData && selectedMedalData.length > 0 ? (
-                selectedMedalData.map((medalist, index) => (
-                  <tr key={index}>
-                    <td>{medalist.name}</td>
-                    <td>{medalist.discipline}</td>
-                    <td>{medalist.event}</td>
-                    <td>{medalist.medal_date}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4">No data available</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        <MedalDetails 
+          medalType={medalType} 
+          selectedMedalData={selectedMedalData} 
+          onClose={() => setShowMedalDetails(false)} 
+        />
       )}
     </div>
   );

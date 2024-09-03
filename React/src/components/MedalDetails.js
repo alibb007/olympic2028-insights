@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-const MedalDetails = ({ medalType, selectedMedalData, onClose }) => {
+const MedalDetails = ({ medalType, selectedMedalData, totalMedals, onClose }) => {
   const modalRef = useRef();
 
   useEffect(() => {
@@ -65,6 +65,11 @@ const MedalDetails = ({ medalType, selectedMedalData, onClose }) => {
           )}
         </tbody>
       </table>
+
+      {/* Display the total number of medals */}
+      <div className="total-medals">
+        <strong>Total Medals: {totalMedals}</strong>
+      </div>
     </div>
   );
 };

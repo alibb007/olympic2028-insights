@@ -186,7 +186,7 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
             : 0;
 
           return `
-          <div style="font-family: 'Paris2024', sans-serif; color: gold; font-size: 28px;">
+          <div style="font-family: 'Paris2024', sans-serif; color: gold; font-size: 28px; font-weight: bold;">
             <b>${properties?.name || 'No Name'}</b> <br />
             Total Medals: ${totalMedals}
           </div>

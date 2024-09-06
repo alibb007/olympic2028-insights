@@ -22,7 +22,7 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
 
   useEffect(() => {
     // Fetch medals.json
-    fetch('/medals1.json')
+    fetch('/medals2.json')
       .then((response) => response.json())
       .then((data) => setMedalsData(data))
       .catch((error) => console.error('Error fetching medals.json:', error));

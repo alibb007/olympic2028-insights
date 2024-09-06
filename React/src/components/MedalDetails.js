@@ -66,10 +66,7 @@ const MedalDetails = ({ medalType, selectedMedalData, totalMedals, onClose }) =>
         </tbody>
       </table>
 
-      {/* Display the total number of medals */}
-      <div className="total-medals">
-        <strong>Total Medals: {totalMedals}</strong>
-      </div>
+      
     </div>
   );
 };

@@ -85,6 +85,16 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
           data: [medalDataForCountry.Gold, medalDataForCountry.Silver, medalDataForCountry.Bronze],
           backgroundColor: ['gold', 'silver', '#cd7f32'],
           borderRadius: 8,
+          datalabels: {
+            align: 'end',
+            anchor: 'end',
+            color: '#000',
+            font: {
+              weight: 'bold',
+              size: 14,
+            },
+            formatter: (value) => value, // Show values above each bar
+          },
         },
       ],
     };
@@ -137,6 +147,15 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
             return `${context.dataset.label}: ${context.raw}`;
           },
         },
+      },
+      datalabels: {
+        display: true, // Show the medal counts above the bars
+        color: '#000',
+        font: {
+          size: 16,
+          weight: 'bold',
+        },
+        align: 'top',
       },
     },
     onClick: (event, elements) => handleBarClick(elements),
@@ -202,6 +221,9 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
       {showChart && barData && (
         <div className="chart-container">
           <button className="close-button" onClick={() => setShowChart(false)}>X</button>
+          <div className="chart-caption">
+            <p>Select each bar for more details</p>
+          </div>
           <Bar data={barData} options={options} />
           <div className="total-medals">
             <strong>Total Medals: {totalMedals}</strong>

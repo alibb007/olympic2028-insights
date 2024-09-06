@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 
 const MedalDetails = ({ medalType, selectedMedalData, totalMedals, onClose }) => {
   const modalRef = useRef();
+  const wrapperRef = useRef(); // Wrapper to detect outside clicks
 
   useEffect(() => {
     const modal = modalRef.current;
@@ -35,38 +36,51 @@ const MedalDetails = ({ medalType, selectedMedalData, totalMedals, onClose }) =>
     };
   }, []);
 
-  return (
-    <div ref={modalRef} className="medal-details">
-      <button className="close-button" onClick={onClose}>X</button>
-      <h2>{medalType} Medalists</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Discipline</th>
-            <th>Event</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {selectedMedalData && selectedMedalData.length > 0 ? (
-            selectedMedalData.map((medalist, index) => (
-              <tr key={index}>
-                <td>{medalist.name}</td>
-                <td>{medalist.discipline}</td>
-                <td>{medalist.event}</td>
-                <td>{medalist.medal_date}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4">No data available</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        onClose();
+      }
+    };
 
-      
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
+  return (
+    <div ref={wrapperRef} className="modal-wrapper">
+      <div ref={modalRef} className="medal-details">
+        <button className="close-button" onClick={onClose}>X</button>
+        <h2>{medalType} Medalists</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Discipline</th>
+              <th>Event</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {selectedMedalData && selectedMedalData.length > 0 ? (
+              selectedMedalData.map((medalist, index) => (
+                <tr key={index}>
+                  <td>{medalist.name}</td>
+                  <td>{medalist.discipline}</td>
+                  <td>{medalist.event}</td>
+                  <td>{medalist.medal_date}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No data available</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

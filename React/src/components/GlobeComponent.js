@@ -7,7 +7,6 @@ import 'chartjs-plugin-datalabels';
 import MedalDetails from './MedalDetails';
 
 const GlobeComponent = forwardRef(({ countries }, ref) => {
-  console.log("GlobeComponent rendered");
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [barData, setBarData] = useState(null);
   const [showChart, setShowChart] = useState(false);
@@ -20,19 +19,49 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
   const [medalsData, setMedalsData] = useState([]);
   const [fullData, setFullData] = useState([]);
 
+  
   useEffect(() => {
-    // Fetch medals.json
+    // Fetch medals2.json (complete version)
     fetch('/medals2.json')
       .then((response) => response.json())
       .then((data) => setMedalsData(data))
-      .catch((error) => console.error('Error fetching medals.json:', error));
+      .catch((error) => console.error('Error fetching medals2.json:', error));
 
-    // Fetch data.json
+    // Fetch data.json (as originally)
     fetch('/medals2.json')
       .then((response) => response.json())
       .then((data) => setFullData(data))
       .catch((error) => console.error('Error fetching data.json:', error));
   }, []);
+
+  const countryNameMapping = {
+    "USA": "United States",
+    "England": "United Kingdom",
+    "Czechia": "Czech Republic",
+    "Côte d'Ivoire": "Ivory Coast",
+    "Korea, Republic of": "South Korea",
+    "Korea, Democratic People's Republic of": "North Korea",
+    "Russian Federation": "Russia",
+    "Serbia": "Republic of Serbia",
+    "North Macedonia": "Macedonia"
+  };
+  
+  
+
+  const getMedalData = (countryName) => {
+    // Normalize the country name using the mapping
+    const normalizedCountryName = countryNameMapping[countryName] || countryName;
+  
+    // Find the medal data by matching the normalized country name
+    const medalData = medalsData.find(
+      (entry) => entry['Country Name'].toLowerCase() === normalizedCountryName.toLowerCase()
+    );
+  
+    // Return the medal data or a default structure if no data is found
+    return medalData || { Gold: 0, Silver: 0, Bronze: 0 };
+  };
+  
+  
 
   useEffect(() => {
     if (countries.length > 0 && selectedCountry) {
@@ -69,12 +98,8 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
     },
   }));
 
-  const getMedalData = (countryName) => {
-    const medalData = medalsData.find(
-      (country) => country['Country Name'].toLowerCase() === countryName.toLowerCase()
-    );
-    return medalData || { Gold: 0, Silver: 0, Bronze: 0 };
-  };
+  
+  
 
   const createBarData = (medalDataForCountry) => {
     return {
@@ -118,22 +143,28 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
     if (elements.length > 0) {
       const clickedElementIndex = elements[0].index;
       const medalType = ['Gold', 'Silver', 'Bronze'][clickedElementIndex];
+      const countryName = selectedCountry.properties.name;
+  
+      // Normalize the country name using the mapping
+      const normalizedCountryName = countryNameMapping[countryName] || countryName;
+  
+      // Find the NOC using the normalized country name
       const noc = medalsData.find(
-        (country) => country['Country Name'].toLowerCase() === selectedCountry.properties.name.toLowerCase()
+        (country) => country['Country Name'].toLowerCase() === normalizedCountryName.toLowerCase()
       )?.NOC;
-
+  
       if (noc) {
-        // Filter relevant medalists based on NOC and medal type
-        const medalists = fullData.filter(
-          (entry) => entry.NOC === noc && entry.medal_type === medalType
-        );
-
+        const medalists = fullData.filter((entry) => entry.NOC === noc && entry.medal_type === medalType);
+  
         setMedalType(medalType);
         setSelectedMedalData(medalists);
         setShowMedalDetails(true);
+      } else {
+        console.error("No NOC found for the selected country");
       }
     }
   };
+  
 
   const options = {
     plugins: {
@@ -232,10 +263,10 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
       )}
 
       {showMedalDetails && (
-        <MedalDetails 
-          medalType={medalType} 
-          selectedMedalData={selectedMedalData} 
-          onClose={() => setShowMedalDetails(false)} 
+        <MedalDetails
+          medalType={medalType}
+          selectedMedalData={selectedMedalData}
+          onClose={() => setShowMedalDetails(false)}
         />
       )}
     </div>

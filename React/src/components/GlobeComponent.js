@@ -28,7 +28,7 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
       .catch((error) => console.error('Error fetching medals.json:', error));
 
     // Fetch data.json
-    fetch('/data.json')
+    fetch('/medals2.json')
       .then((response) => response.json())
       .then((data) => setFullData(data))
       .catch((error) => console.error('Error fetching data.json:', error));

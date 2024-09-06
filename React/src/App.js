@@ -18,7 +18,7 @@ function App() {
         setCountries(geoData.features);
       });
 
-    fetch('/medals2.json')
+    fetch('/medals1.json')
       .then((res) => res.json())
       .then((data) => setMedalData(data));
   }, []);

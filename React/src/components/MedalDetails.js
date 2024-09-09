@@ -62,7 +62,7 @@ const MedalDetails = ({ medalType, selectedMedalData, totalMedals, onClose }) =>
               <th>Event</th>
               <th>Date</th>
               <th>Language</th>
-              <th>birth_country</th>
+              <th>Birth Country</th>
               <th>residence_country</th>
             </tr>
           </thead>

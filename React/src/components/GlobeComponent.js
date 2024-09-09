@@ -1,6 +1,7 @@
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import Globe from 'react-globe.gl';
 import * as turf from '@turf/turf';
+import * as THREE from 'three';
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import 'chartjs-plugin-datalabels';
@@ -19,15 +20,12 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
   const [medalsData, setMedalsData] = useState([]);
   const [fullData, setFullData] = useState([]);
 
-  
   useEffect(() => {
-    // Fetch medals2.json (complete version)
     fetch('/medals2.json')
       .then((response) => response.json())
       .then((data) => setMedalsData(data))
       .catch((error) => console.error('Error fetching medals2.json:', error));
 
-    // Fetch data.json (as originally)
     fetch('/medals2.json')
       .then((response) => response.json())
       .then((data) => setFullData(data))
@@ -45,23 +43,48 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
     "Serbia": "Republic of Serbia",
     "North Macedonia": "Macedonia"
   };
-  
-  
 
   const getMedalData = (countryName) => {
-    // Normalize the country name using the mapping
     const normalizedCountryName = countryNameMapping[countryName] || countryName;
-  
-    // Find the medal data by matching the normalized country name
     const medalData = medalsData.find(
       (entry) => entry['Country Name'].toLowerCase() === normalizedCountryName.toLowerCase()
     );
-  
-    // Return the medal data or a default structure if no data is found
     return medalData || { Gold: 0, Silver: 0, Bronze: 0 };
   };
-  
-  
+
+  // Create a 3D bar for each medal type
+  const createBarMesh = (height, color) => {
+    const geometry = new THREE.BoxGeometry(0.1, height, 0.1); // Create a box for the bar
+    const material = new THREE.MeshBasicMaterial({ color });
+    const mesh = new THREE.Mesh(geometry, material);
+    return mesh;
+  };
+
+  // Place the bars on the country based on the medal counts
+  const placeBarsOnCountry = (country, medalData) => {
+    const centroid = turf.centroid(country).geometry.coordinates;
+    const lat = centroid[1];
+    const lon = centroid[0];
+
+    const goldHeight = medalData.Gold * 0.1; // Scale bar heights
+    const silverHeight = medalData.Silver * 0.1;
+    const bronzeHeight = medalData.Bronze * 0.1;
+
+    // Create 3 bars for Gold, Silver, and Bronze medals
+    const goldBar = createBarMesh(goldHeight, 'gold');
+    const silverBar = createBarMesh(silverHeight, 'silver');
+    const bronzeBar = createBarMesh(bronzeHeight, '#cd7f32');
+
+    // Set their positions
+    goldBar.position.set(lon, goldHeight / 2, lat);
+    silverBar.position.set(lon + 0.05, silverHeight / 2, lat);
+    bronzeBar.position.set(lon + 0.1, bronzeHeight / 2, lat);
+
+    // Add them to the globe
+    globeEl.current.scene().add(goldBar);
+    globeEl.current.scene().add(silverBar);
+    globeEl.current.scene().add(bronzeBar);
+  };
 
   useEffect(() => {
     if (countries.length > 0 && selectedCountry) {
@@ -80,6 +103,9 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
               medalDataForCountry.Gold + medalDataForCountry.Silver + medalDataForCountry.Bronze
             );
             setShowChart(true);
+
+            // Add 3D bars on the country
+            placeBarsOnCountry(selectedCountry, medalDataForCountry);
           } else {
             setBarData(createNoMedalData());
             setTotalMedals(0);
@@ -97,9 +123,6 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
       setSelectedCountry(country);
     },
   }));
-
-  
-  
 
   const createBarData = (medalDataForCountry) => {
     return {
@@ -144,18 +167,16 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
       const clickedElementIndex = elements[0].index;
       const medalType = ['Gold', 'Silver', 'Bronze'][clickedElementIndex];
       const countryName = selectedCountry.properties.name;
-  
-      // Normalize the country name using the mapping
+
       const normalizedCountryName = countryNameMapping[countryName] || countryName;
-  
-      // Find the NOC using the normalized country name
+
       const noc = medalsData.find(
         (country) => country['Country Name'].toLowerCase() === normalizedCountryName.toLowerCase()
       )?.NOC;
-  
+
       if (noc) {
         const medalists = fullData.filter((entry) => entry.NOC === noc && entry.medal_type === medalType);
-  
+
         setMedalType(medalType);
         setSelectedMedalData(medalists);
         setShowMedalDetails(true);
@@ -164,7 +185,6 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
       }
     }
   };
-  
 
   const options = {
     plugins: {
@@ -197,7 +217,7 @@ const GlobeComponent = forwardRef(({ countries }, ref) => {
         },
         ticks: {
           font: {
-            family: 'Paris2024', // Apply custom font
+            family: 'Paris2024',
             size: 20,
             weight: 'bold',
           },

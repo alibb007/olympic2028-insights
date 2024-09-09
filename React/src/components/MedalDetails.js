@@ -65,6 +65,8 @@ const MedalDetails = ({ medalType, selectedMedalData, totalMedals, onClose }) =>
               <th>Birth Country</th>
               <th>Residence Country</th>
               <th>Hobbies</th>
+              <th>Occupation</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -79,6 +81,8 @@ const MedalDetails = ({ medalType, selectedMedalData, totalMedals, onClose }) =>
                   <td>{medalist.birth_country}</td>
                   <td>{medalist.residence_country}</td>
                   <td>{medalist.hobbies}</td>
+                  <td>{medalist.occupation}</td>
+                  
                 </tr>
               ))
             ) : (

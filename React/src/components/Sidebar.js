@@ -6,6 +6,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   PieChartOutlined,
+  ConsoleSqlOutlined
 } from '@ant-design/icons';
 import { Button, Menu } from 'antd';
 
@@ -15,7 +16,7 @@ type MenuItem = Required<Menu['items'][number]>;
 const items: MenuItem[] = [
   { key: '1', icon: <PieChartOutlined />, label: 'Globe Dashboard' },
   { key: '2', icon: <DesktopOutlined />, label: 'Map Dashboard' },
-  { key: '3', icon: <ContainerOutlined />, label: 'Facts' },
+  { key: '3', icon: <ConsoleSqlOutlined />, label: 'Facts' },
 ];
 
 const App: React.FC = () => {

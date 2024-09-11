@@ -1,30 +1,48 @@
-import React from 'react';
-import { FaHome, FaChartBar, FaTachometerAlt, FaProjectDiagram } from 'react-icons/fa';
-import '../App.css'; // Ensure that this import is at the top
+import React, { useState } from 'react';
+import {
+  AppstoreOutlined,
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PieChartOutlined,
+} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Button, Menu } from 'antd';
 
-const Sidebar = () => {
+type MenuItem = Required<MenuProps>['items'][number];
+
+const items: MenuItem[] = [
+  { key: '1', icon: <PieChartOutlined />, label: 'Globe Dashboard ' },
+  { key: '2', icon: <DesktopOutlined />, label: 'Map Dashboard' },
+  { key: '3', icon: <ContainerOutlined />, label: 'Facts' }
+  
+  
+];
+
+const App: React.FC = () => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
-    <div className="sidebar"> {/* Use "sidebar" as the className */}
-      <ul>
-        <li>
-          <FaHome className="icon" />
-          <div className="text">Home</div>
-        </li>
-        <li>
-          <FaChartBar className="icon" />
-          <div className="text">Summary</div>
-        </li>
-        <li>
-          <FaTachometerAlt className="icon" />
-          <div className="text">Dashboard</div>
-        </li>
-        <li>
-          <FaProjectDiagram className="icon" />
-          <div className="text">Prediction</div>
-        </li>
-      </ul>
+    <div style={{ width: 500 }}>
+      <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </Button>
+      <Menu
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode="inline"
+        theme="dark"
+        inlineCollapsed={collapsed}
+        items={items}
+      />
     </div>
   );
 };
 
-export default Sidebar;
+export default App;

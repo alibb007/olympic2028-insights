@@ -3,22 +3,19 @@ import {
   AppstoreOutlined,
   ContainerOutlined,
   DesktopOutlined,
-  MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   PieChartOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
 import { Button, Menu } from 'antd';
 
-type MenuItem = Required<MenuProps>['items'][number];
+type MenuItem = Required<Menu['items'][number]>;
 
+// Define sidebar menu items
 const items: MenuItem[] = [
-  { key: '1', icon: <PieChartOutlined />, label: 'Globe Dashboard ' },
+  { key: '1', icon: <PieChartOutlined />, label: 'Globe Dashboard' },
   { key: '2', icon: <DesktopOutlined />, label: 'Map Dashboard' },
-  { key: '3', icon: <ContainerOutlined />, label: 'Facts' }
-  
-  
+  { key: '3', icon: <ContainerOutlined />, label: 'Facts' },
 ];
 
 const App: React.FC = () => {
@@ -29,7 +26,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ width: 500 }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, width: collapsed ? '80px' : '250px', height: '100vh', zIndex: 9999 }}>
       <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
@@ -40,6 +37,7 @@ const App: React.FC = () => {
         theme="dark"
         inlineCollapsed={collapsed}
         items={items}
+        style={{ fontSize: '20px' }} 
       />
     </div>
   );

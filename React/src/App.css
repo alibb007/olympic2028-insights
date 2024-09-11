@@ -25,7 +25,7 @@ body {
 
 /* The App container */
 .App {
-  display: flex;
+  display: fixed;
   height: 100vh;
   width: 100vw;
   margin: 0;
@@ -33,48 +33,28 @@ body {
   position: relative; /* Make relative to handle overlay */
 }
 
-/* Sidebar styling for overlay */
-.sidebar {
-  width: 150px; /* Sidebar width */
-  height: 100vh; /* Full height */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 30px;
-  position: fixed; /* Sidebar is fixed and overlays the content */
-  top: 0;
-  left: 0; /* Stays at the left of the page */
-  z-index: 200; /* Ensure it overlays the content */
-  overflow-y: auto; /* Add scroll if content overflows */
-}
 
-/* Sidebar text styling */
-.sidebar li .text {
-  font-family: 'Paris2024', sans-serif;
-  font-size: 16px;
-  color: white;
-  font-weight: bold;
-}
-
+/* Main content */
 .main-content {
   flex-grow: 1;
   height: 100vh;
   background-color: black;
-  margin-left: 250px; /* Offset to make room for the sidebar */
   z-index: 100; /* Ensure content stays under the sidebar */
   overflow: hidden;
 }
 
+/* Adjust the globe container */
 .globe-container {
   flex-grow: 1;
-  display: fixed;
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
   background-color: black;
-  margin-left: 0; /* Make sure the globe is not hidden under the sidebar */
   overflow: hidden;
+  position: relative; /* Ensures it stays behind the sidebar */
+  z-index: 50; /* Lower than the sidebar */
 }
 
 .globe-container canvas {

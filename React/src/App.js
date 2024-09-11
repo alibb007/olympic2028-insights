@@ -43,15 +43,16 @@ function App() {
       {showLandingPage ? (
         <LandingPage onStart={handleStartClick} />
       ) : (
-        <div className="main-layout">
+        <>
           <Sidebar />
-          <div className="content-wrapper">
+          <div className="main-content">
             <SearchBar onSearch={handleSearch} countries={countries} />
             <GlobeComponent ref={globeRef} countries={countries} medalData={medalData} />
           </div>
-        </div>
+        </>
       )}
     </div>
+
   );
 }
 

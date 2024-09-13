@@ -17,6 +17,7 @@ const items: MenuItem[] = [
   { key: '1', icon: <PieChartOutlined />, label: 'Globe Dashboard' },
   { key: '2', icon: <DesktopOutlined />, label: 'Map Dashboard' },
   { key: '3', icon: <ConsoleSqlOutlined />, label: 'Facts' },
+  { key: '4', icon: <ConsoleSqlOutlined />, label: 'Imigrition' },
 ];
 
 const App: React.FC = () => {
